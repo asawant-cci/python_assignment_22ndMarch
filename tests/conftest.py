@@ -29,6 +29,8 @@ def driver(request):
         browser_driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()))
     else:
         raise TypeError(f'Expected browser to be chrome,firefox,edge got {browser}')
+
+    #browser_driver.implicitly_wait(10)
     yield browser_driver
     print(f'Closing driver for {browser} browser')
     browser_driver.quit()

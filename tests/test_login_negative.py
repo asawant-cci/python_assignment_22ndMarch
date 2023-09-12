@@ -1,5 +1,4 @@
 # import required packages
-import time
 import pytest
 
 # import webdriver_manager.chrome
@@ -26,8 +25,8 @@ def test_invalid_username_and_password_login(driver, username, password, expecte
     login_page = LoginPage(driver)
     login_page.open()
     login_page.perform_login(username, password)
-    time.sleep(5)
+
     login_page.is_error_label_displayed()
     assert login_page.error_label_text() == expected_error_message, "Error message does not match"
-    time.sleep(5)
+
 

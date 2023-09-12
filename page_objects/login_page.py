@@ -1,7 +1,7 @@
-import time
-
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class LoginPage:
@@ -22,15 +22,16 @@ class LoginPage:
         return self._driver.current_url
 
     def perform_login(self, username, password):
+        wait = WebDriverWait(self._driver, 10)
+        wait.until(ec.presence_of_element_located(self.__username_field))
         username_data = self._driver.find_element(*self.__username_field)
         password_data = self._driver.find_element(*self.__password_field)
         submit_button_field = self._driver.find_element(*self.__submit_button)
 
         username_data.send_keys(username)
         password_data.send_keys(password)
-        time.sleep(5)
+
         submit_button_field.click()
-        time.sleep(5)
 
     def error_label_text(self):
         error_label = self._driver.find_element(*self.__error_label_field)
@@ -38,8 +39,6 @@ class LoginPage:
         return actual_text
 
     def is_error_label_displayed(self):
+        wait = WebDriverWait(self._driver, 10)
+        wait.until(ec.presence_of_element_located(self.__error_label_field))
         self._driver.find_element(*self.__error_label_field).is_displayed()
-        # displayed_error_message = self._driver.find_element(*self.__error_label_field)
-        # displayed_error_message.is_displayed()
-
-
